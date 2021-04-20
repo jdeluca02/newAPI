@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>API Fun</title>
+    <script>
+        function getAPI() {
+            
+            var newRequest = new XMLHttpRequest();
+            if (!newRequest) {
+                alert("Unable to complete the XMLHttpRequest");
+                return;
+            }
+
+            newRequest.open("GET", "http://api.currencylayer.com/live?access_key=ef7859828f538c87d38078f76e9703c7&currencies=USD,EUR&format=1", true);
+            
+            newRequest.onreadystatechange = function() {
+                if (newRequest.readyState == 4 && newRequest.status == 200) {
+                    result = newRequest.responseText;
+                    dataParsed = JSON.parse(result);
+                    euro = dataParsed["quotes"]["USDEUR"];
+                    display = "1 USD = " + euro + " EUR";
+                    document.getElementById("data").innerHTML = display;
+                }
+                if (newRequest.readyState == 4 && newRequest.status == 204) {
+                    error = "No data received.";
+                    document.getElementById("data").innerHTML = error;
+                }
+                if (newRequest.readyState == 3) {
+                    error = "Data not received yet.";
+                    document.getElementById("data").innerHTML = error;
+                }
+            }
+            newRequest.send();
+        }
+    </script>
+</head>
+<body onload="getAPI()">
+    <h1>US Dollars to Euros With New Website</h1>
+    <p id="data">&nbsp;</p>
+    
+    <p>This API allows for individuals to access different conversion rates of currencies areound the world.</p>
+    
+    <p>New Website Used: https://currencylayer.com/</p>
+    
+    <p>For this request, "GET" was used and I put in my new API key and "USDEUR" into the open request to access the necessary infromation.<br> This made it
+        possible to access the conversion data with USD as the base currency and the EUR as the target currency. <br> I 
+        accessed the "USDEUR" key within the given "quotes" object.</p>
+    
+    <p>This API could be useful for anyone who does online shopping from different
+        countries or for people that work with money daily and have foreign affairs.</p>
+    
+</body>
+</html>
